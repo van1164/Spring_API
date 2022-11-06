@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springrestapi.demo.entity.User;
-import springrestapi.demo.repository.UserRepository;
 
 import java.util.List;
 
@@ -15,15 +14,13 @@ import java.util.List;
 public class UserController {
 
 
-    private final UserRepository userRepository;
-
     //Create
     @PostMapping("/create")
     public ResponseEntity<?> createUser(User user){
-        user.setCreateTime(new MyLibrary().getDateTime());
-        return ResponseEntity.ok(userRepository.save(user));
+        return ResponseEntity.ok("TTTTT");
     }
 
+/*
     //ReadAll
     @GetMapping("/list")
     public List<User> readAll(){
@@ -52,5 +49,5 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){
         userRepository.deleteById(id);
     }
-
+*/
 }
