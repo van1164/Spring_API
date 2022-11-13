@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter // 해당 클래스에 대한 설정자 생성
 @AllArgsConstructor // 해당
 public class getCoupons {
-
+    private int coupon_idx;
     private int COUPID;
     private String user_id;
     private String shop_id;

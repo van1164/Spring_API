@@ -24,10 +24,7 @@ public class UserController {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass()); // Log를 남기기: 일단은 모르고 넘어가셔도 무방합니다.
 
-    @Autowired  // 객체 생성을 스프링에서 자동으로 생성해주는 역할. 주입하려 하는 객체의 타입이 일치하는 객체를 자동으로 주입한다.
-    // IoC(Inversion of Control, 제어의 역전) / DI(Dependency Injection, 의존관계 주입)에 대한 공부하시면, 더 깊이 있게 Spring에 대한 공부를 하실 수 있을 겁니다!(일단은 모르고 넘어가셔도 무방합니다.)
-    // IoC 간단설명,  메소드나 객체의 호출작업을 개발자가 결정하는 것이 아니라, 외부에서 결정되는 것을 의미
-    // DI 간단설명, 객체를 직접 생성하는 게 아니라 외부에서 생성한 후 주입 시켜주는 방식
+    @Autowired
     private final UserProvider userProvider;
     @Autowired
     private final UserService userService;
@@ -41,19 +38,9 @@ public class UserController {
         this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
     }
 
-    // ******************************************************************************
-
-    /**
-     * 회원가입 API
-     * [POST] /users
-     */
-    // Body
     @ResponseBody
     @PostMapping("/sign-up")    // POST 방식의 요청을 매핑하기 위한 어노테이션
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
-        //        //  @RequestBody란, 클라이언트가 전송하는 HTTP Request Body(우리는 JSON으로 통신하니, 이 경우 body는 JSON)를 자바 객체로 매핑시켜주는 어노테이션
-        // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
-        // email에 값이 존재하는지, 빈 값으로 요청하지는 않았는지 검사합니다. 빈값으로 요청했다면 에러 메시지를 보냅니다.
         if (postUserReq.getEmail() == null) {
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
@@ -69,6 +56,14 @@ public class UserController {
         }
     }
 
+
+    @ResponseBody
+    @PutMapping("/Puttest")
+    public String PUT_TEST() { return "PUTTEST";}
+
+    @ResponseBody
+    @DeleteMapping("/Deletetest")
+    public String Delete_TEST(){ return "DeleteTEST";}
     /**
      * 로그인 API
      * [POST] /users/logIn
@@ -83,10 +78,8 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
     //Query String
-    @ResponseBody   // return되는 자바 객체를 JSON으로 바꿔서 HTTP body에 담는 어노테이션.
-    //  JSON은 HTTP 통신 시, 데이터를 주고받을 때 많이 쓰이는 데이터 포맷.
+    @ResponseBody
     @GetMapping("") // (GET) 127.0.0.1:9000/app/users
     // GET 방식의 요청을 매핑하기 위한 어노테이션
     public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String nickname) {
